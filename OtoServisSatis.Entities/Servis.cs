@@ -1,13 +1,24 @@
-﻿namespace OtoServisSatis.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace OtoServisSatis.Entities
 {
     public class Servis : IEntity
     {
         public int Id { get; set; }
-        public int AracId { get; set; }
-        public int MusteriId { get; set; }
-        public decimal SatisFiyati { get; set; }
-        public DateTime SatisTarihi { get; set; }
-        public virtual Arac Arac { get; set; }
-        public virtual Musteri Musteri { get; set; }
+        public DateTime ServiseGelisTarihi { get; set; }
+        public string AracSorunu { get; set; }
+        public decimal ServisUcreti { get; set; }
+        public DateTime ServistenCikisTarihi { get; set; }
+        public string? YapilanIslemler { get; set; }
+        public bool GarantiKapsamindaMi { get; set; }
+        [StringLength(15)]
+        public string AracPlaka { get; set; }
+        [StringLength(50)]
+        public string Marka { get; set; }
+        [StringLength(50)]
+        public string? Model { get; set; }
+        public string? KasaTipi { get; set; }
+        public string? SaseNo { get; set; }
+        public string Notlar { get; set; }
     }
 }

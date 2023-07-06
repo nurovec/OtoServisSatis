@@ -27,6 +27,7 @@ namespace OtoServisSatis.Data
         {
             //fluent API
             modelBuilder.Entity<Marka>().Property(m=>m.Adi).IsRequired().HasColumnType("nvarchar(50)");
+            modelBuilder.Entity<Rol>().Property(m => m.Adi).IsRequired().HasColumnType("nvarchar(50)");
             modelBuilder.Entity<Rol>().HasData(new Rol
             {
                 Id = 1,
