@@ -19,8 +19,8 @@ namespace OtoServisSatis.Data
         public DbSet<Servis> Servisler { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"data source=(LocalDB)\MSSQLLocalDB;initial database=OtoServisSatisNetCore;integrated
-           security=True;MultipleActiveResultSets=True;");
+            optionsBuilder.UseSqlServer(@"server=(LocalDB)\MSSQLLocalDB; database=OtoServisSatisNetCore;
+            integrated security=True; MultipleActiveResultSets=True;");
             base.OnConfiguring(optionsBuilder);
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -42,7 +42,7 @@ namespace OtoServisSatis.Data
                 Email = "admin@otoservissatis.tc",
                 KullaniciAdi = "admin",
                 Sifre = "123456",
-                Rol = new Rol { Id = 1 },
+                //Rol = new Rol { Id = 1 },
                 RolId = 1,
                 Soyadi = "Admin",
                 Telefon = "0850",
