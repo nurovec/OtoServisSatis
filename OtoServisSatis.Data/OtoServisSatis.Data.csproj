@@ -18,8 +18,4 @@
     <ProjectReference Include="..\OtoServisSatis.Entities\OtoServisSatis.Entities.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Concrete\" />
-  </ItemGroup>
-
 </Project>
