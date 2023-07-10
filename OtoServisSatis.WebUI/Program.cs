@@ -1,8 +1,13 @@
-var builder = WebApplication.CreateBuilder(args);
+using OtoServisSatis.Data;
+using OtoServisSatis.Service.Abstract;
+using OtoServisSatis.Service.Concrete;
 
+var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<DatabaseContext>();
 
+builder.Services.AddTransient(typeof(IService<>),typeof(Service<>));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -15,7 +20,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-
 app.UseRouting();
 
 app.UseAuthorization();
