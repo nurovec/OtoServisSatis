@@ -38,11 +38,14 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         // POST: RolesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Rol rol)
         {
+           
             try
             {
-                return RedirectToAction(nameof(IndexAsync));
+                _service.add(rol);
+                _service.Save();
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -63,7 +66,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(IndexAsync));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -84,7 +87,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(IndexAsync));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
