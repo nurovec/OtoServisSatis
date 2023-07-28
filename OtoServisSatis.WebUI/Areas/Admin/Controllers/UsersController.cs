@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using OtoServisSatis.Entities;
 using OtoServisSatis.Service.Abstract;
 
@@ -9,10 +10,13 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
     public class UsersController : Controller
     {
         private readonly IService<Kullanici> _service;
+        private readonly IService<Rol> _serviceRol;
 
-        public UsersController(IService<Kullanici> service)
+
+        public UsersController(IService<Kullanici> service, IService<Rol> serviceRol)
         {
             _service = service;
+            _serviceRol = serviceRol;
         }
 
         // GET: UsersController
@@ -30,24 +34,32 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         }
 
         // GET: UsersController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> CreateAsync()
         {
+            ViewBag.RolId=new SelectList(await _serviceRol.GetAllAsync(),"Id","Adi");
             return View();
         }
 
         // POST: UsersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> CreateAsync(Kullanici kullanici)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                   await _service.AddAsync(kullanici);
+                   await _service.SaveAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Hata Oluştu"); 
+                }
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.RolId = new SelectList(await _serviceRol.GetAllAsync(), "Id", "Adi");
+            return View(kullanici);
         }
 
         // GET: UsersController/Edit/5
