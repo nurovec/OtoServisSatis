@@ -36,52 +36,63 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         // POST: BrandsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> CreateAsync(Marka marka)
         {
             try
             {
+                await _service.AddAsync(marka);
+                await _service.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "Hata Oluştu!");
             }
+            return View();
         }
 
         // GET: BrandsController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditAsync(int id)
         {
-            return View();
+            var model=await _service.FindAsync(id);
+            return View(model);
         }
 
         // POST: BrandsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> EditAsync(int id, Marka marka )
         {
             try
             {
+                 _service.update(marka);
+                _service.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
             {
-                return View();
+                ModelState.AddModelError("", "Hata Oluştu!");
             }
+            return View();
         }
+    
 
         // GET: BrandsController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            return View();
+            var model = await _service.FindAsync(id);
+            return View(model);
         }
 
         // POST: BrandsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Marka marka)
         {
             try
             {
+                _service.delete(marka);
+                _service.Save();
                 return RedirectToAction(nameof(Index));
             }
             catch
