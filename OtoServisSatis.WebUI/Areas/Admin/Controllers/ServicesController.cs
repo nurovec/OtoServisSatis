@@ -37,16 +37,22 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         // POST: ServicesController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> CreateAsync(Servis servis)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(IndexAsync));
+                try
+                {
+                    await _service.AddAsync(servis);
+                    await _service.SaveAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Hata OLuştu!");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View();
         }
 
         // GET: ServicesController/Edit/5
