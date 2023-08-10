@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using OtoServisSatis.Entities;
 using OtoServisSatis.Service.Abstract;
 
@@ -9,10 +10,12 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
     public class CustomersController : Controller
     {
         private readonly IService<Musteri> _service;
+        private readonly IService<Arac> _serviceArac;
 
-        public CustomersController(IService<Musteri> service)
+        public CustomersController(IService<Musteri> service, IService<Arac> serviceArac)
         {
             _service = service;
+            _serviceArac = serviceArac;
         }
 
         // GET: CustomersController
@@ -28,24 +31,32 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         }
 
         // GET: CustomersController/Create
-        public ActionResult Create()
+        public async Task<ActionResult> CreateAsync()
         {
+            ViewBag.AracId = new SelectList(await _serviceArac.GetAllAsync(),"Id","Modeli");
             return View();
         }
 
         // POST: CustomersController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<ActionResult> CreateAsync(Musteri musteri)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    await _service.AddAsync(musteri);
+                    await _service.SaveAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Hata OLuştu!");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.AracId = new SelectList(await _serviceArac.GetAllAsync(), "Id", "Modeli");
+            return View(musteri);
         }
 
         // GET: CustomersController/Edit/5
