@@ -52,44 +52,55 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
                     ModelState.AddModelError("", "Hata OLuştu!");
                 }
             }
-            return View();
+            return View(servis);
         }
 
         // GET: ServicesController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditAsync(int id)
         {
-            return View();
+            var model = await _service.FindAsync(id);
+            return View(model);
         }
 
         // POST: ServicesController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> EditAsync(int id, Servis servis)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(IndexAsync));
+                try
+                {
+                     _service.update(servis);
+                    await _service.SaveAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Hata OLuştu!");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            return View(servis);
         }
 
         // GET: ServicesController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            return View();
+            var model = await _service.FindAsync(id);
+            return View(model);
+          
         }
 
         // POST: ServicesController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Servis servis)
         {
             try
             {
-                return RedirectToAction(nameof(IndexAsync));
+                _service.delete(servis);
+                _service.Save();
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
