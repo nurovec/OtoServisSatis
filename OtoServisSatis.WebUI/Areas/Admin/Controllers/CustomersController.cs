@@ -63,8 +63,8 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         public async Task<ActionResult> EditAsync(int id)
         {
             ViewBag.AracId = new SelectList(await _serviceArac.GetAllAsync(), "Id", "Modeli");
-            var Model=await _service.FindAsync(id);
-            return View();
+            var model=await _service.FindAsync(id);
+            return View(model);
         }
 
         // POST: CustomersController/Edit/5
@@ -90,18 +90,21 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         }
 
         // GET: CustomersController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> DeleteAsync(int id)
         {
-            return View();
+            var model = await _service.FindAsync(id);
+            return View(model);
         }
 
         // POST: CustomersController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Musteri musteri)
         {
             try
             {
+                _service.delete(musteri);
+                _service.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
