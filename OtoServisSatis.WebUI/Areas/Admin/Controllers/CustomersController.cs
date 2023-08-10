@@ -60,24 +60,33 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         }
 
         // GET: CustomersController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> EditAsync(int id)
         {
+            ViewBag.AracId = new SelectList(await _serviceArac.GetAllAsync(), "Id", "Modeli");
+            var Model=await _service.FindAsync(id);
             return View();
         }
 
         // POST: CustomersController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> EditAsync(int id, Musteri musteri)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                     _service.update(musteri);
+                    await _service.SaveAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch
+                {
+                    ModelState.AddModelError("", "Hata OLuştu!");
+                }
             }
-            catch
-            {
-                return View();
-            }
+            ViewBag.AracId = new SelectList(await _serviceArac.GetAllAsync(), "Id", "Modeli");
+            return View(musteri);
         }
 
         // GET: CustomersController/Delete/5
