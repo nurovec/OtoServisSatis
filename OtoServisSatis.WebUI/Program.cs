@@ -1,11 +1,22 @@
 using OtoServisSatis.Data;
 using OtoServisSatis.Service.Abstract;
 using OtoServisSatis.Service.Concrete;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x=>
+{
+    x.LoginPath = "/Admin/Login";
+    x.AccessDeniedPath = "/AcceessDenied";
+    x.LogoutPath = "/Admin/Logout";
+    x.Cookie.Name = "Admin";
+    x.Cookie.MaxAge=TimeSpan.FromDays(7);
+    x.Cookie.IsEssential = true;
+}
+);
 
 builder.Services.AddTransient(typeof(IService<>),typeof(Service<>));
 var app = builder.Build();
@@ -22,6 +33,7 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllerRoute(
             name : "admin",
