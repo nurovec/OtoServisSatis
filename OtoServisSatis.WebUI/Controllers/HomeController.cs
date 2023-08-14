@@ -22,6 +22,11 @@ namespace OtoServisSatis.WebUI.Controllers
         {
             return View();
         }
+        [Route("AcceessDenied")]
+        public IActionResult AcceessDenied()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
