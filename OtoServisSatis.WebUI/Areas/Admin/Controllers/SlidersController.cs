@@ -41,7 +41,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         {
             try
             {
-                collection.Resim = await FileHelper.FileLoaderAsync(Resim, "/img/Slider/");
+                collection.Resim = await FileHelper.FileLoaderAsync(Resim, "/Img/Slider/");
                 await _service.AddAsync(collection);
                 await _service.SaveAsync();
                 return RedirectToAction(nameof(Index));
@@ -53,18 +53,23 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         }
 
         // GET: SliderController/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<ActionResult> Edit(int id)
         {
-            return View();
+            var data = await _service.FindAsync(id);
+            return View(data);
         }
 
         // POST: SliderController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, Slider collection,IFormFile? Resim)
         {
             try
             {
+                if (Resim is not null)
+                    collection.Resim = await FileHelper.FileLoaderAsync(Resim, "/Img/Slider/");
+                _service.update(collection);
+                await _service.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
