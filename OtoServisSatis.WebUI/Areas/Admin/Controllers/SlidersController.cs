@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OtoServisSatis.Entities;
 using OtoServisSatis.Service.Abstract;
@@ -17,7 +16,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         }
 
         // GET: SliderController
-        public async Task<ActionResult> IndexAsync()
+        public async Task<ActionResult> Index()
         {
             return View(await _service.GetAllAsync());
         }
@@ -37,11 +36,11 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         // POST: SliderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Slider collection)
         {
             try
             {
-                return RedirectToAction(nameof(IndexAsync));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -62,7 +61,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(IndexAsync));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
@@ -83,7 +82,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         {
             try
             {
-                return RedirectToAction(nameof(IndexAsync));
+                return RedirectToAction(nameof(Index));
             }
             catch
             {
