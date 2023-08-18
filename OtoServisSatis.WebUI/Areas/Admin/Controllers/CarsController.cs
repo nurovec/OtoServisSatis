@@ -42,7 +42,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         // POST: CarsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> CreateAsync(Arac arac)
+        public async Task<ActionResult> CreateAsync(Arac arac,IFormFile Resim1,IFormFile Resim2,IFormFile Resim3)
         {
             if (ModelState.IsValid)
             {
@@ -72,7 +72,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         // POST: CarsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> EditAsync(int id, Arac arac)
+        public async Task<ActionResult> EditAsync(int id, Arac arac, IFormFile Resim1, IFormFile Resim2, IFormFile Resim3)
         {
             if (ModelState.IsValid)
             {
