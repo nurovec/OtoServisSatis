@@ -71,7 +71,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         {
             ViewBag.MarkaId = new SelectList(await _serviceMarka.GetAllAsync(), "Id", "Adi");
             var model= await _service.FindAsync(id);
-            return View();
+            return View(model);
         }
 
         // POST: CarsController/Edit/5
