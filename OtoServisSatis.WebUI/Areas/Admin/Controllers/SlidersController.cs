@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OtoServisSatis.Entities;
 using OtoServisSatis.Service.Abstract;
+using OtoServisSatis.WebUI.Utils;
 
 namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
 {
@@ -36,10 +37,13 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         // POST: SliderController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Slider collection)
+        public async Task<ActionResult> CreateAsync(Slider collection ,IFormFile? Resim)
         {
             try
             {
+                collection.Resim = await FileHelper.FileLoaderAsync(Resim, "/img/Slider/");
+                await _service.AddAsync(collection);
+                await _service.SaveAsync();
                 return RedirectToAction(nameof(Index));
             }
             catch
