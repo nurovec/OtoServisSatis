@@ -49,9 +49,9 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
             {
                 try
                 {
-                    arac.Resim1= await FileHelper.FileLoaderAsync(Resim1);
-                    arac.Resim2= await FileHelper.FileLoaderAsync(Resim2);
-                    arac.Resim3= await FileHelper.FileLoaderAsync(Resim3);
+                    arac.Resim1= await FileHelper.FileLoaderAsync(Resim1,"/img/Cars/");
+                    arac.Resim2= await FileHelper.FileLoaderAsync(Resim2 ,"/img/Cars/");
+                    arac.Resim3= await FileHelper.FileLoaderAsync(Resim3,"/img/Cars/");
 
                     await _service.AddAsync(arac);
                     await _service.SaveAsync();
@@ -85,17 +85,17 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
                 {
                     if (Resim1 is not null)
                     {
-                        arac.Resim1 = await FileHelper.FileLoaderAsync(Resim1);
+                        arac.Resim1 = await FileHelper.FileLoaderAsync(Resim1, "/img/Cars/");
                     }
 
                     if (Resim2 is not null)
                     {
-                        arac.Resim2 = await FileHelper.FileLoaderAsync(Resim1);
+                        arac.Resim2 = await FileHelper.FileLoaderAsync(Resim1 , "/img/Cars/");
                     }
 
                     if (Resim3 is not null)
                     {
-                        arac.Resim3 = await FileHelper.FileLoaderAsync(Resim1);
+                        arac.Resim3 = await FileHelper.FileLoaderAsync(Resim1, "/img/Cars/");
                     }
                     _service.update(arac);
                     _service.SaveAsync();
