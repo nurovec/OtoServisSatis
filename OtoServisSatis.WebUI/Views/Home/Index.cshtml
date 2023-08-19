@@ -1,13 +1,13 @@
-﻿@model IEnumerable<Slider>
+﻿@model HomePageViewModel
 @{
     ViewData["Title"] = "Ana Sayfa";
 }
 <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
 
     <div class="carousel-inner"> 
-       @foreach (var item in Model)
+       @foreach (var item in Model.Sliders)
         {
-            <div class="carousel-item @(item==Model.FirstOrDefault() ? "active" : "")">
+            <div class="carousel-item @(item==Model.Sliders.FirstOrDefault() ? "active" : "")">
                 <img src="/Img/Slider/@item.Resim" class="d-block w-100" alt="...">
                 <div class="carousel-caption d-none d-md-block">
                     <h5>@item.Baslik</h5>
