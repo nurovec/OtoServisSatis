@@ -21,7 +21,7 @@ namespace OtoServisSatis.WebUI.Controllers
             var model = new HomePageViewModel()
             {
                 Sliders=await _service.GetAllAsync(),
-                Araclar=await _serviceArac.GetAllAsync(),
+                Araclar=await _serviceArac.GetAllAsync(a=>a.Anasayfa),
             };
                
             return View(model);
