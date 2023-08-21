@@ -7,6 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DatabaseContext>();
+
+builder.Services.AddTransient(typeof(IService<>),typeof(Service<>));
+builder.Services.AddTransient<ICarService, CarService>();
+
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x=>
 {
     x.LoginPath = "/Admin/Login";
@@ -23,7 +28,6 @@ builder.Services.AddAuthorization(x =>
     x.AddPolicy("UserPolicy", policy => policy.RequireClaim("Role", "User"));
 });
 
-builder.Services.AddTransient(typeof(IService<>),typeof(Service<>));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
