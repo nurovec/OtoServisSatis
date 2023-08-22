@@ -18,5 +18,11 @@ namespace OtoServisSatis.WebUI.Controllers
            var model= await _serviceArac.GetCustomCar(id);
             return View(model);
         }
+        [Route("tum-araclarimiz")]
+        public async Task<IActionResult> List()
+        {
+            var model = await _serviceArac.GetCustomCarList(c=>c.SatistaMi);
+            return View(model);
+        }
     }
 }
