@@ -30,8 +30,8 @@ namespace OtoServisSatis.WebUI.Controllers
             {
                 try
                 {
-                    var rol = await _serviceRol.GetAsync(r=>r.Adi=="Customer");
-                    if (rol != null)
+                    var rol = await _serviceRol.GetAsync(r => r.Adi == "Customer");
+                    if (rol == null)
                     {
 
                         ModelState.AddModelError("", "Kayıt Başarısız");
