@@ -50,5 +50,15 @@ namespace OtoServisSatis.WebUI.Controllers
             }
             return View();
         }
+        
+        public IActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Login(string email , string password)
+        {
+            return View();
+        }
     }
 }
