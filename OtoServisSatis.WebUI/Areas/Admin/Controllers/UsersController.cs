@@ -68,7 +68,7 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
         {
             var model =await _service.FindAsync(id);
             ViewBag.RolId = new SelectList(await _serviceRol.GetAllAsync(), "Id", "Adi");
-            return View();
+            return View(model);
         }
 
         // POST: UsersController/Edit/5

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Mvc;
 using OtoServisSatis.Entities;
 using OtoServisSatis.Service.Abstract;
+using System.Security.Claims;
 
 namespace OtoServisSatis.WebUI.Controllers
 {
@@ -50,14 +52,43 @@ namespace OtoServisSatis.WebUI.Controllers
             }
             return View();
         }
-        
+
         public IActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult Login(string email , string password)
+        public async Task<IActionResult> LoginAsync(CustomerLoginViewModel customerLoginViewModel)
         {
+            try
+            {
+                var account = await _service.GetAsync(k => k.Email == customerLoginViewModel.Email && k.Sifre == customerLoginViewModel.Sifre && k.AktifMi == true);
+                if (account == null)
+                {
+                    ModelState.AddModelError("", "Giriş Başarısız");
+                }
+                else
+                {
+                    var rol = _serviceRol.Get(r => r.Id == account.RolId);
+                    var claims = new List<Claim>()
+                    {
+                        new Claim(ClaimTypes.Name,account.Adi)
+
+                    };
+                    if (rol is not null)
+                    {
+                        claims.Add(new Claim("Role", rol.Adi));
+                    }
+                    var userIdentity = new ClaimsIdentity(claims, "Login");
+                    ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+                    await HttpContext.SignInAsync(principal);
+                    return Redirect("/Admin");
+                }
+            }
+            catch (Exception)
+            {
+                ModelState.AddModelError("", "Hata OLuştu");
+            }
             return View();
         }
     }

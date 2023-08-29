@@ -1,4 +1,5 @@
-﻿@model Kullanici
+﻿@using OtoServisSatis.WebUI.Controllers;
+@model CustomerLoginViewModel
 @{
     ViewData["Title"] = "Üye Girişi";
 }
@@ -8,7 +9,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Register">
+        <form asp-action="Login">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
             <div class="form-group">
