@@ -82,7 +82,7 @@ namespace OtoServisSatis.WebUI.Controllers
                     var userIdentity = new ClaimsIdentity(claims, "Login");
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                     await HttpContext.SignInAsync(principal);
-                    return Redirect("/Admin");
+                    return Redirect("/Account");
                 }
             }
             catch (Exception)
