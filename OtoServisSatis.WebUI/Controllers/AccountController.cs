@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OtoServisSatis.Entities;
 using OtoServisSatis.Service.Abstract;
@@ -16,7 +17,7 @@ namespace OtoServisSatis.WebUI.Controllers
             _service = service;
             _serviceRol = serviceRol;
         }
-
+        [Authorize(Policy = "CustomerPolicy")]
         public IActionResult Index()
         {
             return View();
