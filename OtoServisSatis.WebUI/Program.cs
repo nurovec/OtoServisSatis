@@ -14,9 +14,9 @@ builder.Services.AddTransient<ICarService, CarService>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(x=>
 {
-    x.LoginPath = "/Admin/Login";
+    x.LoginPath = "/Account/Login";
     x.AccessDeniedPath = "/AcceessDenied";
-    x.LogoutPath = "/Admin/Logout";
+    x.LogoutPath = "/Account/Logout";
     x.Cookie.Name = "Admin";
     x.Cookie.MaxAge=TimeSpan.FromDays(7);
     x.Cookie.IsEssential = true;
