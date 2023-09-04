@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OtoServisSatis.Data.Abstract;
 
 namespace OtoServisSatis.Service.Abstract
 {
-    internal interface IUserService
+    public interface IUserService :IUserRepository
     {
     }
 }

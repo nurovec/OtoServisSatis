@@ -1,12 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using OtoServisSatis.Data;
+using OtoServisSatis.Data.Concrete;
+using OtoServisSatis.Service.Abstract;
 
 namespace OtoServisSatis.Service.Concrete
 {
-    internal class UserService
+    public class UserService : UserRepository,IUserService
     {
+        public UserService(DatabaseContext context) : base(context)
+        {
+        }
     }
 }

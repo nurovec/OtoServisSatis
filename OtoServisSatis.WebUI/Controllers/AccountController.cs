@@ -9,10 +9,10 @@ namespace OtoServisSatis.WebUI.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly IService<Kullanici> _service;
+        private readonly IUserService _service;
         private readonly IService<Rol> _serviceRol;
 
-        public AccountController(IService<Kullanici> service, IService<Rol> serviceRol)
+        public AccountController(IUserService service, IService<Rol> serviceRol)
         {
             _service = service;
             _serviceRol = serviceRol;
