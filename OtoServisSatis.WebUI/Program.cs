@@ -4,6 +4,7 @@ using OtoServisSatis.Service.Concrete;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using OtoServisSatis.Data.Abstract;
 using OtoServisSatis.Data.Concrete;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -27,9 +28,9 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
 );
 builder.Services.AddAuthorization(x =>
 {
-    x.AddPolicy("AdminPolicy", policy => policy.RequireClaim("Role", "Admin"));
-    x.AddPolicy("UserPolicy", policy => policy.RequireClaim("Role", "User"));
-    x.AddPolicy("CustomerPolicy", policy => policy.RequireClaim("Admin" ,"Role", "User" ,"Customer"));
+    x.AddPolicy("AdminPolicy", policy => policy.RequireClaim(ClaimTypes.Role, "Admin"));
+    x.AddPolicy("UserPolicy", policy => policy.RequireClaim(ClaimTypes.Role,"Admin","User"));
+    x.AddPolicy("CustomerPolicy", policy => policy.RequireClaim(ClaimTypes.Role, "Admin" , "User" ,"Customer"));
 });
 
 var app = builder.Build();
