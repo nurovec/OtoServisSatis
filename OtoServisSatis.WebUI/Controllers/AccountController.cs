@@ -73,7 +73,9 @@ namespace OtoServisSatis.WebUI.Controllers
                     var rol = _serviceRol.Get(r => r.Id == account.RolId);
                     var claims = new List<Claim>()
                     {
-                        new Claim(ClaimTypes.Name,account.Adi)
+                        new Claim(ClaimTypes.Name,account.Adi),
+                        new Claim(ClaimTypes.Email,account.Email),
+                        new Claim(ClaimTypes.UserData,account.UserGuid.ToString())
 
                     };
                     if (rol is not null)
@@ -83,7 +85,7 @@ namespace OtoServisSatis.WebUI.Controllers
                     var userIdentity = new ClaimsIdentity(claims, "Login");
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
                     await HttpContext.SignInAsync(principal);
-                    if (rol.Adi == "/Admin");
+                    if (rol.Adi == "/Admin") ;
                     {
                         return Redirect("/Admin");
                     }

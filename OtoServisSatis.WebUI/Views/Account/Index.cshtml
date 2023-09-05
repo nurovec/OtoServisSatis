@@ -1,7 +1,11 @@
-﻿
+﻿@model Kullanici
 @{
     ViewData["Title"] = "Index";
 }
 
 <h1>Index</h1>
 
+@Context.User.HasClaim(x=>x.Value=="Admin")
+
+<br />
+@Context.User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value
