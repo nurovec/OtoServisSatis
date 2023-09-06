@@ -3,7 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>@Model.Adi @Model.Soyadi</h1>
 
 @Context.User.HasClaim(x=>x.Value=="Admin")
 

@@ -20,7 +20,19 @@ namespace OtoServisSatis.WebUI.Controllers
         [Authorize(Policy = "CustomerPolicy")]
         public IActionResult Index()
         {
-            return View();
+            var email = User.FindFirst(ClaimTypes.Email)?.Value;
+            var uguid = User.FindFirst(ClaimTypes.UserData)?.Value;
+            if (!string.IsNullOrEmpty(email) || !string.IsNullOrEmpty(uguid)) 
+            {
+                var user = _service.Get(k => k.Email == email && k.UserGuid.ToString() == uguid);
+                if (user != null)
+                { 
+                    return View(user);
+
+                }
+            }      
+
+            return NotFound();
         }
         public IActionResult Register()
         {
