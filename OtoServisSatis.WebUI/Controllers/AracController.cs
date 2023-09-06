@@ -76,10 +76,12 @@ namespace OtoServisSatis.WebUI.Controllers
                 {
                     await _serviceMusteri.AddAsync(musteri);
                     await _serviceMusteri.SaveAsync();
+                    TempData["Message"]="<div class='alert alert-success'>Talebiniz alınmıştır. Teşekkürler...</div>";
                     return Redirect("/Arac/Index/" + musteri.AracId);
                 }
                 catch
                 {
+                    TempData["Message"] = "<div class='alert alert-danger'>Bir Hata Oluştu!</div>";
                     ModelState.AddModelError("", "Hata OLuştu!");
                 }
             }
