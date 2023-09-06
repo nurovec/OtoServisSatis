@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace OtoServisSatis.WebUI.Controllers
+namespace OtoServisSatis.WebUI.Models
 {
     public class CustomerLoginViewModel
     {

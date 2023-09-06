@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OtoServisSatis.Entities;
 using OtoServisSatis.Service.Abstract;
+using OtoServisSatis.WebUI.Models;
 using System.Security.Claims;
 
 namespace OtoServisSatis.WebUI.Controllers
