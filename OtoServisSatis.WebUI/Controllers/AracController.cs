@@ -3,6 +3,7 @@ using OtoServisSatis.Entities;
 using OtoServisSatis.Service.Abstract;
 using OtoServisSatis.Service.Concrete;
 using OtoServisSatis.WebUI.Models;
+using OtoServisSatis.WebUI.Utils;
 using System.Security.Claims;
 
 namespace OtoServisSatis.WebUI.Controllers
@@ -76,6 +77,7 @@ namespace OtoServisSatis.WebUI.Controllers
                 {
                     await _serviceMusteri.AddAsync(musteri);
                     await _serviceMusteri.SaveAsync();
+                   // await MailHelper.SendMailAsync(musteri);
                     TempData["Message"]="<div class='alert alert-success'>Talebiniz alınmıştır. Teşekkürler...</div>";
                     return Redirect("/Arac/Index/" + musteri.AracId);
                 }
