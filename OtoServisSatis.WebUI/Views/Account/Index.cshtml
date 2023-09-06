@@ -8,4 +8,9 @@
 @Context.User.HasClaim(x=>x.Value=="Admin")
 
 <br />
+
+@Context.User.FindFirst(System.Security.Claims.ClaimTypes.UserData)?.Value
+
+
+<br />
 @Context.User.FindFirst(System.Security.Claims.ClaimTypes.Email)?.Value

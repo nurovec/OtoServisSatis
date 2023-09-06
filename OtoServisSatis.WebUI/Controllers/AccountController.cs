@@ -59,44 +59,83 @@ namespace OtoServisSatis.WebUI.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> LoginAsync(CustomerLoginViewModel customerLoginViewModel)
+
+        public async Task<IActionResult> LoginAsync(CustomerLoginViewModel customerViewModel)
+
         {
+
             try
+
             {
-                var account = await _service.GetAsync(k => k.Email == customerLoginViewModel.Email && k.Sifre == customerLoginViewModel.Sifre && k.AktifMi == true);
+
+                var account = await _service.GetAsync(k => k.Email == customerViewModel.Email && k.Sifre == customerViewModel.Sifre && k.AktifMi == true);
+
                 if (account == null)
+
                 {
-                    ModelState.AddModelError("", "Giriş Başarısız");
+
+                    ModelState.AddModelError("", "Giriş Başarısız!");
+
                 }
+
                 else
+
                 {
+
                     var rol = _serviceRol.Get(r => r.Id == account.RolId);
+
                     var claims = new List<Claim>()
+
                     {
-                        new Claim(ClaimTypes.Name,account.Adi),
-                        new Claim(ClaimTypes.Email,account.Email),
-                        new Claim(ClaimTypes.UserData,account.UserGuid.ToString())
+
+                        new Claim(ClaimTypes.Name, account.Adi),
+
+                        new Claim(ClaimTypes.Email, account.Email),
+
+                        new Claim(ClaimTypes.UserData, account.UserGuid.ToString())
 
                     };
+
                     if (rol is not null)
+
                     {
-                        claims.Add(new Claim("Role", rol.Adi));
+
+                        //claims.Add(new Claim("Role", rol.Adi));
+
+                        claims.Add(new Claim(ClaimTypes.Role, rol.Adi));
+
                     }
+
                     var userIdentity = new ClaimsIdentity(claims, "Login");
+
                     ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
+
                     await HttpContext.SignInAsync(principal);
-                    if (rol.Adi == "/Admin") ;
+
+                    if (rol.Adi == "Admin")
+
                     {
+
                         return Redirect("/Admin");
+
                     }
+
                     return Redirect("/Account");
+
                 }
+
             }
+
             catch (Exception)
+
             {
-                ModelState.AddModelError("", "Hata OLuştu");
+
+                ModelState.AddModelError("", "Hata Oluştu!");
+
             }
+
             return View();
+
         }
         public async Task<IActionResult> Logout()
         {
