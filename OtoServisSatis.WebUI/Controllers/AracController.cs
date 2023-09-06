@@ -13,10 +13,11 @@ namespace OtoServisSatis.WebUI.Controllers
         private readonly IService<Musteri> _serviceMusteri;
         private readonly IUserService _service;
 
-        public AracController(ICarService serviceArac, IService<Musteri> serviceMusteri)
+        public AracController(ICarService serviceArac, IService<Musteri> serviceMusteri, IUserService service)
         {
             _serviceArac = serviceArac;
             _serviceMusteri = serviceMusteri;
+            _service = service;
         }
 
         public async Task<IActionResult> IndexAsync(int? id)
