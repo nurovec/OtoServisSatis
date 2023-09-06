@@ -22,17 +22,53 @@ namespace OtoServisSatis.WebUI.Controllers
         {
             var email = User.FindFirst(ClaimTypes.Email)?.Value;
             var uguid = User.FindFirst(ClaimTypes.UserData)?.Value;
-            if (!string.IsNullOrEmpty(email) || !string.IsNullOrEmpty(uguid)) 
+            if (!string.IsNullOrEmpty(email) || !string.IsNullOrEmpty(uguid))
             {
                 var user = _service.Get(k => k.Email == email && k.UserGuid.ToString() == uguid);
                 if (user != null)
-                { 
+                {
                     return View(user);
 
                 }
-            }      
+            }
 
             return NotFound();
+        }
+        [HttpPost]
+        public IActionResult UserUpdate(Kullanici kullanici)
+        {
+            try
+            {
+
+                var email = User.FindFirst(ClaimTypes.Email)?.Value;
+                var uguid = User.FindFirst(ClaimTypes.UserData)?.Value;
+                if (!string.IsNullOrEmpty(email) || !string.IsNullOrEmpty(uguid))
+                {
+                    var user = _service.Get(k => k.Email == email && k.UserGuid.ToString() == uguid);
+                    if (user != null)
+                    {
+                        user.Adi=kullanici.Adi;
+                        user.AktifMi=kullanici.AktifMi;
+                        user.Email=kullanici.Email;
+                        user.UserGuid=kullanici.UserGuid;
+                        user.Sifre=kullanici.Sifre;
+                        user.EklenmeTarihi=kullanici.EklenmeTarihi;
+                        user.Soyadi=kullanici.Soyadi;
+                        user.Telefon=kullanici.Telefon;
+                            
+                        _service.update(user);
+                        _service.Save();
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                ModelState.AddModelError("", "Hata Oluştu");
+            }
+
+            return RedirectToAction("index");
         }
         public IActionResult Register()
         {

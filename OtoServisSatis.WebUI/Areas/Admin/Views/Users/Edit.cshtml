@@ -15,17 +15,19 @@
             <input type="hidden" asp-for="Id" />
             <input type="hidden" asp-for="EklenmeTarihi" />
             <input type="hidden" asp-for="UserGuid" />
+
+            <div class="form-group">
+                <label asp-for="UserGuid" class="control-label"></label>
+                <br />
+                @Model.UserGuid
+
+            </div>
             <div class="form-group">
                 <label asp-for="Adi" class="control-label"></label>
                 <input asp-for="Adi" class="form-control" />
                 <span asp-validation-for="Adi" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="UserGuid" class="control-label"></label>
-                <br />
-                @Model.UserGuid
-               
-            </div>
+          
             <div class="form-group">
                 <label asp-for="Soyadi" class="control-label"></label>
                 <input asp-for="Soyadi" class="form-control" />
