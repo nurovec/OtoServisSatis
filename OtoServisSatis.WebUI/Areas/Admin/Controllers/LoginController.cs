@@ -46,10 +46,14 @@ namespace OtoServisSatis.WebUI.Areas.Admin.Controllers
                        
                     };
                     if (rol is not null)
+
                     {
-                        claims.Add(new Claim("Role", rol.Adi));
+
+                        //claims.Add(new Claim("Role", rol.Adi));
+
+                        claims.Add(new Claim(ClaimTypes.Role, rol.Adi));
                     }
-                    var userIdentity=new ClaimsIdentity(claims,"Login");
+                        var userIdentity=new ClaimsIdentity(claims,"Login");
                     ClaimsPrincipal principal =new ClaimsPrincipal(userIdentity);
                     await HttpContext.SignInAsync(principal);
                     return Redirect("/Admin");
